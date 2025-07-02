@@ -8,6 +8,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
+import java.util.function.Consumer;
+
 public class MongoTest1 {
     public static void main(String[] args) {
         // MongoDB 연동
@@ -42,10 +44,26 @@ public class MongoTest1 {
                         ", 나이 : " + doc2.get("age") +
                         ", 성별 : " + doc2.get("gender"));
             }
+
+            System.out.println("-------------------------");
+            collection.find().forEach(printConsumer);
+
+            cursor.close();
         } catch (Exception e) {
             System.out.println("에러 : " + e.getMessage());
         } finally {
             client.close();
         }
     }
+
+    // Block<Document> 대신 Consumer<Document> 사용
+    static Consumer<Document> printConsumer = new Consumer<Document>() {
+        @Override
+        public void accept(Document document) {
+//            System.out.println(document.toJson()); // Json 형태로 출력
+            String name = document.getString("name");
+            Integer age = document.getInteger("age");
+            System.out.println(name + " " + age);
+        }
+    };
 }
