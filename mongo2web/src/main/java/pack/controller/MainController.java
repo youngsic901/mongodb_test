@@ -9,4 +9,19 @@ public class MainController {
     public String index() {
         return "index";
     }
+
+    @GetMapping("/insertform")
+    public String insertForm() {
+        return "insert";
+    }
+
+    @GetMapping("/updateform")
+    public String updateForm() {
+        return "update";
+    }
+
+    @GetMapping("/deleteform")
+    public String deleteForm() {
+        return "delete";
+    }
 }

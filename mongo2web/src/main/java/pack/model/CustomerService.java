@@ -2,6 +2,8 @@ package pack.model;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerService {
     private final CustomerRepository customerRepository;
@@ -10,8 +12,9 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public void printAllCustomers() { // 모든 고객 출력
+    public List<Customer> printAllCustomers() { // 모든 고객 출력
         customerRepository.findAll().forEach(customer -> { System.out.println(customer); });
+        return customerRepository.findAll();
     }
 
     public void insertCustomer(String name, int age, String gender) {
