@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link rel="stylesheet" th:href="@{/css/mystyles.css}">
+	<script type="text/javascript">
+		function confirmDelete(event, id) {
+			event.preventDefault();
+			if(confirm('정말 삭제할까요?')) {
+				window.location.href = "/schedules/delete/" + id;
+			}
+		}
+	</script>
+</head>
+<body>
+<h2>일정 목록</h2>
+<a href="/schedules/new" class="button primary">새 일정 추가</a>
+<table>
+	<thead>
+		<th>제목</th><th>설명</th><th>시작 시간</th><th>종료 시간</th><th>작업</th>
+	</thead>
+	<tbody>
+		<tr th:each="schedule:${schedules}">
+			<td th:text="${schedule.title}">제목</td>
+			<td th:text="${schedule.description}">설명</td>
+			<td th:text="${#temporals.format(schedule.startTime, 'yyyy-MM-dd HH:mm')}">시작 시간</td>
+			<td th:text="${#temporals.format(schedule.endTime, 'yyyy-MM-dd HH:mm')}">종료 시간</td>
+			<td>
+				<a th:href="@{'/schedules/edit/' + ${schedule.id}}" class="button secondary">수정</a>
+				<a href="#" class="button danger" th:data-id="${schedule.id}" onclick="confirmDelete(event, this.getAttribute('data-id'))">삭제</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+</body>
+</html>
